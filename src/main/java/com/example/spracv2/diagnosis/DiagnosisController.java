@@ -3,6 +3,7 @@ package com.example.spracv2.diagnosis;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,9 +25,9 @@ public class DiagnosisController {
         return diagnosisService.create(diagnosis);
     }
 
-    @GetMapping("/diagnosisHistory")
-    public List<Diagnosis> getTopBooks() {
-        return null;
+    @GetMapping("/diagnosisHistory/{id}")
+    public List<Diagnosis> getHistory(@PathVariable UUID id) {
+        return diagnosisService.getHistory(id);
     }
 
 

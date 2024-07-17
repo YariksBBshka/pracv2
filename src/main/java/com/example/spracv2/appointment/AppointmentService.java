@@ -1,6 +1,7 @@
 package com.example.spracv2.appointment;
 
 import com.example.spracv2.common.BaseService;
+import com.example.spracv2.diagnosis.Diagnosis;
 import com.example.spracv2.doctor.Doctor;
 import com.example.spracv2.doctor.DoctorRepository;
 import com.example.spracv2.patient.Patient;
@@ -30,7 +31,12 @@ public class AppointmentService implements BaseService <Appointment, String> {
 
     @Override
     public Appointment create(Appointment appointment) {
-        return appointmentRepository.save(appointment);
+        if (isTimeAvailable(appointment.getFkDoctor(), appointment.getAppointmentDate(), appointment.getAppointmentTime(), appointment.getFkPatient())) {
+            appointment.setStatus(AppointmentStatus.BOOKED);
+            return appointmentRepository.save(appointment);
+        } else {
+            throw new RuntimeException("Time is not available");
+        }
     }
 
     @Override
@@ -52,33 +58,20 @@ public class AppointmentService implements BaseService <Appointment, String> {
 
 
     public boolean isTimeAvailable(Doctor doctor, LocalDate date, LocalTime time, Patient patient) {
-        if (patient.getClientStatus() == PatientStatus.VIP && time.isBefore(LocalTime.of(19, 0))) {
-            return true;
-        } else if (time.isBefore(LocalTime.of(10, 0)) || time.isAfter(LocalTime.of(18, 0))) {
-            return false;
-        }
         List<Appointment> appointments = appointmentRepository.findByFkDoctorAndAppointmentDate(doctor, date);
         for (Appointment appointment : appointments) {
             if (appointment.getAppointmentTime().equals(time)) {
                 return false;
             }
         }
-        return true;
+        if (patient.getClientStatus().equals(PatientStatus.VIP) && time.isBefore(LocalTime.of(19, 0)) &&(time.isAfter(LocalTime.of(10, 0)))) {
+            return true;
+        } else if (patient.getClientStatus().equals(PatientStatus.BASIC) && time.isBefore(LocalTime.of(18, 0)) &&(time.isAfter(LocalTime.of(10, 0)))) {
+            return true;
+        }
+        return false;
     }
 
-    public Appointment bookAppointment(Doctor doctor, Patient patient, LocalDate date, LocalTime time) {
-        if (isTimeAvailable(doctor, date, time, patient)) {
-            Appointment appointment = new Appointment();
-            appointment.setFkDoctor(doctor);
-            appointment.setFkPatient(patient);
-            appointment.setAppointmentDate(date);
-            appointment.setAppointmentTime(time);
-            appointment.setStatus(AppointmentStatus.BOOKED);
-            return appointmentRepository.save(appointment);
-        } else {
-            throw new RuntimeException("Time is not available");
-        }
-    }
 
     public Appointment completeAppointment(Appointment appointment) {
         appointment.setStatus(AppointmentStatus.COMPLETED);
@@ -90,7 +83,9 @@ public class AppointmentService implements BaseService <Appointment, String> {
         return appointmentRepository.save(appointment);
     }
 
-
+    public List<Appointment> getAHistory(UUID id) {
+        return appointmentRepository.findByPatientUuid(id);
+    }
 
 
 

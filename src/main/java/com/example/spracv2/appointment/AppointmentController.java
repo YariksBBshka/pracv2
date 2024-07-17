@@ -32,16 +32,31 @@ public class AppointmentController {
     }
 
     @PostMapping("/booking")
-    public void bookAppointment(@RequestBody AppointmentDTO appointmentDTO) {
+    public void bookAppointment(@RequestBody AppointmentBookingDTO appointmentBookingDTO) {
+        Appointment appointment = new Appointment()
+                .setFkDoctor(doctorService.getById(appointmentBookingDTO.getDoctorId()))
+                .setFkPatient(patientService.getById(appointmentBookingDTO.getPatientId()))
+                .setAppointmentDate(appointmentBookingDTO.getLocalDate())
+                .setAppointmentTime(appointmentBookingDTO.getLocalTime());
+        appointmentService.create(appointment);
+
+
     }
 
     @PostMapping("/complete/{id}")
     public void completeAppointment(@PathVariable UUID id) {
+        appointmentService.completeAppointment(appointmentService.getById(String.valueOf(id)));
     }
 
     @PostMapping("/cancel/{id}")
     public void cancelAppointment(@PathVariable UUID id) {
-
+        appointmentService.cancelAppointment(appointmentService.getById(String.valueOf(id)));
     }
+
+    @GetMapping("/appointmentHistory/{id}")
+    public List<Appointment> getHistory(@PathVariable UUID id) {
+        return appointmentService.getAHistory(id);
+    }
+
 }
 

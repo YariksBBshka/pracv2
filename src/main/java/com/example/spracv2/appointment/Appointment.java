@@ -4,13 +4,12 @@ import com.example.spracv2.common.BaseEntity;
 import com.example.spracv2.diagnosis.Diagnosis;
 import com.example.spracv2.doctor.Doctor;
 import com.example.spracv2.patient.Patient;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "appointment")
@@ -20,7 +19,7 @@ public class Appointment extends BaseEntity {
     private AppointmentStatus status;
     private Doctor fkDoctor;
     private Patient fkPatient;
-//    private List<Diagnosis> diagnoses;
+    private List<Diagnosis> diagnoses;
 
     @Column(name = "appointment_date", nullable = false)
     public LocalDate getAppointmentDate() {
@@ -59,34 +58,38 @@ public class Appointment extends BaseEntity {
     protected Appointment(){
     }
 
-    public void setAppointmentDate(LocalDate appointmentDate) {
+    public Appointment setAppointmentDate(LocalDate appointmentDate) {
         this.appointmentDate = appointmentDate;
+        return this;
     }
 
-    public void setAppointmentTime(LocalTime appointmentTime) {
+    public Appointment setAppointmentTime(LocalTime appointmentTime) {
         this.appointmentTime = appointmentTime;
+        return this;
     }
 
-    public void setFkDoctor(Doctor fkDoctor) {
+    public Appointment setFkDoctor(Doctor fkDoctor) {
         this.fkDoctor = fkDoctor;
+        return this;
     }
 
-    public void setFkPatient(Patient fkPatient) {
+    public Appointment setFkPatient(Patient fkPatient) {
         this.fkPatient = fkPatient;
+        return this;
     }
 
     public void setStatus(AppointmentStatus status) {
         this.status = status;
     }
+@   JsonIgnore
+    @OneToMany(mappedBy = "fkAppointment", fetch = FetchType.EAGER)
+    public List<Diagnosis> getDiagnoses() {
+        return diagnoses;
+    }
 
-//    @OneToMany(mappedBy = "fkAppointment", fetch = FetchType.LAZY)
-//    public List<Diagnosis> getDiagnoses() {
-//        return diagnoses;
-//    }
-//
-//    public void setDiagnoses(List<Diagnosis> diagnoses) {
-//        this.diagnoses = diagnoses;
-//    }
+    public void setDiagnoses(List<Diagnosis> diagnoses) {
+        this.diagnoses = diagnoses;
+    }
 
 
 }

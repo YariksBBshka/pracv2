@@ -3,6 +3,7 @@ package com.example.spracv2.diagnosis;
 import com.example.spracv2.appointment.Appointment;
 import com.example.spracv2.common.BaseEntity;
 import com.example.spracv2.treatment.Treatment;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -24,8 +25,8 @@ public class Diagnosis extends BaseEntity {
     public String getDescription() {
         return description;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "fk_appointment_id", nullable = false)
     public Appointment getFkAppointment() {
         return fkAppointment;

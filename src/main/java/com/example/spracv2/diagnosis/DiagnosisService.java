@@ -39,4 +39,8 @@ public class DiagnosisService implements BaseService <Diagnosis, String> {
     public void delete(String id) {
         diagnosisRepository.deleteById(UUID.fromString(id));
     }
+
+    public List<Diagnosis> getHistory(UUID id) {
+        return diagnosisRepository.findByPatientId(id);
+    }
 }
