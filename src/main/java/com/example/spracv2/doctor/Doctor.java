@@ -69,7 +69,7 @@ public class Doctor extends BaseEntity {
     public void setAppointments(List<Appointment> appointments) {
         this.appointments = appointments;
     }
-    @OneToMany(mappedBy = "fkDoctor")
+    @OneToMany(mappedBy = "fkDoctor", fetch = FetchType.LAZY)
     public List<Appointment> getAppointments() {
         return appointments;
     }

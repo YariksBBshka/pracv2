@@ -80,7 +80,7 @@ public class Appointment extends BaseEntity {
         this.status = status;
     }
 
-    @OneToMany(mappedBy = "fkAppointment")
+    @OneToMany(mappedBy = "fkAppointment", fetch = FetchType.LAZY)
     public List<Diagnosis> getDiagnoses() {
         return diagnoses;
     }
