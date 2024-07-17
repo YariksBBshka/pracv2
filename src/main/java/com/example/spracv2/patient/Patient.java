@@ -18,7 +18,7 @@ public class Patient extends BaseEntity {
     private String address;
     private String phoneNumber;
     private PatientStatus clientStatus;
-    private List<Appointment> appointments;
+//    private List<Appointment> appointments;
 
     @Column(name = "firstname", nullable = false, length = 100)
     public String getFirstname() {
@@ -50,14 +50,13 @@ public class Patient extends BaseEntity {
         return clientStatus;
     }
 
-    public Patient(String firstname, String lastname, LocalDate dateOfBirth, String address, String phoneNumber, PatientStatus clientStatus, List<Appointment> appointments) {
+    public Patient(String firstname, String lastname, LocalDate dateOfBirth, String address, String phoneNumber, PatientStatus clientStatus) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.clientStatus = clientStatus;
-        this.appointments = appointments;
     }
 
     protected Patient(){
@@ -84,12 +83,12 @@ public class Patient extends BaseEntity {
     }
 
 
-    public void setAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
-    }
-    @OneToMany(mappedBy = "fkPatient", fetch = FetchType.LAZY)
-    public List<Appointment> getAppointments() {
-        return appointments;
-    }
+//    public void setAppointments(List<Appointment> appointments) {
+//        this.appointments = appointments;
+//    }
+//    @OneToMany(mappedBy = "fkPatient", fetch = FetchType.LAZY)
+//    public List<Appointment> getAppointments() {
+//        return appointments;
+//    }
 
 }

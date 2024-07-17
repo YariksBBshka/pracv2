@@ -15,7 +15,7 @@ public class Doctor extends BaseEntity {
     private String lastname;
     private String speciality;
     private Integer roomNumber;
-    private List<Appointment> appointments;
+//    private List<Appointment> appointments;
 
     @Column(name = "firstname", nullable = false, length = 100)
     public String getFirstname() {
@@ -37,12 +37,11 @@ public class Doctor extends BaseEntity {
         return roomNumber;
     }
 
-    public Doctor(String firstname, String lastname, String speciality, Integer roomNumber, List<Appointment> appointments) {
+    public Doctor(String firstname, String lastname, String speciality, Integer roomNumber) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.speciality = speciality;
         this.roomNumber = roomNumber;
-        this.appointments = appointments;
     }
 
     protected Doctor(){
@@ -66,11 +65,11 @@ public class Doctor extends BaseEntity {
 
 
 
-    public void setAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
-    }
-    @OneToMany(mappedBy = "fkDoctor", fetch = FetchType.LAZY)
-    public List<Appointment> getAppointments() {
-        return appointments;
-    }
+//    public void setAppointments(List<Appointment> appointments) {
+//        this.appointments = appointments;
+//    }
+//    @OneToMany(mappedBy = "fkDoctor", fetch = FetchType.LAZY)
+//    public List<Appointment> getAppointments() {
+//        return appointments;
+//    }
 }

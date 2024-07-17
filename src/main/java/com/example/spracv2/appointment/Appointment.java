@@ -20,7 +20,7 @@ public class Appointment extends BaseEntity {
     private AppointmentStatus status;
     private Doctor fkDoctor;
     private Patient fkPatient;
-    private List<Diagnosis> diagnoses;
+//    private List<Diagnosis> diagnoses;
 
     @Column(name = "appointment_date", nullable = false)
     public LocalDate getAppointmentDate() {
@@ -31,13 +31,13 @@ public class Appointment extends BaseEntity {
         return appointmentTime;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "fk_doctor_id", nullable = false)
     public Doctor getFkDoctor() {
         return fkDoctor;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "fk_patient_id", nullable = false)
     public Patient getFkPatient() {
         return fkPatient;
@@ -48,13 +48,12 @@ public class Appointment extends BaseEntity {
         return status;
     }
 
-    public Appointment(LocalDate appointmentDate, LocalTime appointmentTime, AppointmentStatus status, Doctor fkDoctor, Patient fkPatient, List<Diagnosis> diagnoses) {
+    public Appointment(LocalDate appointmentDate, LocalTime appointmentTime, AppointmentStatus status, Doctor fkDoctor, Patient fkPatient) {
         this.appointmentDate = appointmentDate;
         this.appointmentTime = appointmentTime;
         this.status = status;
         this.fkDoctor = fkDoctor;
         this.fkPatient = fkPatient;
-        this.diagnoses = diagnoses;
     }
 
     protected Appointment(){
@@ -80,14 +79,14 @@ public class Appointment extends BaseEntity {
         this.status = status;
     }
 
-    @OneToMany(mappedBy = "fkAppointment", fetch = FetchType.LAZY)
-    public List<Diagnosis> getDiagnoses() {
-        return diagnoses;
-    }
-
-    public void setDiagnoses(List<Diagnosis> diagnoses) {
-        this.diagnoses = diagnoses;
-    }
+//    @OneToMany(mappedBy = "fkAppointment", fetch = FetchType.LAZY)
+//    public List<Diagnosis> getDiagnoses() {
+//        return diagnoses;
+//    }
+//
+//    public void setDiagnoses(List<Diagnosis> diagnoses) {
+//        this.diagnoses = diagnoses;
+//    }
 
 
 }
