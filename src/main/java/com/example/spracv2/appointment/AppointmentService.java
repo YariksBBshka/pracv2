@@ -74,13 +74,23 @@ public class AppointmentService implements BaseService <Appointment, String> {
 
 
     public Appointment completeAppointment(Appointment appointment) {
-        appointment.setStatus(AppointmentStatus.COMPLETED);
-        return appointmentRepository.save(appointment);
+        if (!(appointment.getStatus().equals(AppointmentStatus.CANCELLED))) {
+            appointment.setStatus(AppointmentStatus.COMPLETED);
+            return appointmentRepository.save(appointment);
+        }
+        else{
+            return null;
+        }
     }
 
     public Appointment cancelAppointment(Appointment appointment) {
-        appointment.setStatus(AppointmentStatus.CANCELLED);
-        return appointmentRepository.save(appointment);
+        if (!(appointment.getStatus().equals(AppointmentStatus.COMPLETED))) {
+            appointment.setStatus(AppointmentStatus.CANCELLED);
+            return appointmentRepository.save(appointment);
+        }
+        else{
+            return null;
+        }
     }
 
     public List<Appointment> getAHistory(UUID id) {

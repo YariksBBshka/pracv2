@@ -11,11 +11,13 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AppointmentRepository extends JpaRepository <Appointment, UUID> {
-    @Query("SELECT a FROM Appointment a WHERE a.fkDoctor = :doctor AND a.appointmentDate = :date")
-    List<Appointment> findByDoctorAndDate(@Param("doctor") Doctor doctor, @Param("date") LocalDate date);
 
     @Query("SELECT a FROM Appointment a WHERE a.fkPatient.id = :patientUuid")
     List<Appointment> findByPatientUuid(@Param("patientUuid") UUID patientUuid);
 
     List<Appointment> findByFkDoctorAndAppointmentDate(Doctor doctor, LocalDate date);
+
+    @Query("SELECT a FROM Appointment a WHERE a.fkDoctor = :doctor AND a.appointmentDate = :date")
+    List<Appointment> findByDoctorAndDate(@Param("doctor") Doctor doctor, @Param("date") LocalDate date);
+
 }
