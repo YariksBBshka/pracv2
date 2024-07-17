@@ -34,8 +34,4 @@ public class PatientService implements BaseService<Patient, String> {
     public Patient update(Patient patient) {
         return patientRepository.save(patient);
     }
-    @Override
-    public void delete(String id) {
-        patientRepository.deleteById(UUID.fromString(id));
-    }
 }

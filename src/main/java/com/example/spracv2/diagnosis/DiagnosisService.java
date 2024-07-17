@@ -35,10 +35,6 @@ public class DiagnosisService implements BaseService <Diagnosis, String> {
     public Diagnosis update(Diagnosis Diagnosis) {
         return diagnosisRepository.save(Diagnosis);
     }
-    @Override
-    public void delete(String id) {
-        diagnosisRepository.deleteById(UUID.fromString(id));
-    }
 
     public List<Diagnosis> getHistory(UUID id) {
         return diagnosisRepository.findByPatientId(id);

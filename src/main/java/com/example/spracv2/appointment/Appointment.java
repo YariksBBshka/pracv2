@@ -81,7 +81,7 @@ public class Appointment extends BaseEntity {
     public void setStatus(AppointmentStatus status) {
         this.status = status;
     }
-@   JsonIgnore
+@JsonIgnore
     @OneToMany(mappedBy = "fkAppointment", fetch = FetchType.EAGER)
     public List<Diagnosis> getDiagnoses() {
         return diagnoses;

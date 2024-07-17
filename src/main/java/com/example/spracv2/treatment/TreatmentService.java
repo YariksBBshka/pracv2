@@ -12,8 +12,6 @@ import java.util.UUID;
 public class TreatmentService implements BaseService <Treatment, String> {
 
     private final TreatmentRepository treatmentRepository;
-
-
     @Autowired
     public TreatmentService(TreatmentRepository treatmentRepository) {
         this.treatmentRepository = treatmentRepository;
@@ -35,9 +33,5 @@ public class TreatmentService implements BaseService <Treatment, String> {
     @Override
     public Treatment update(Treatment treatment) {
         return treatmentRepository.save(treatment);
-    }
-    @Override
-    public void delete(String id) {
-        treatmentRepository.deleteById(UUID.fromString(id));
     }
 }

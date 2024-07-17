@@ -51,10 +51,6 @@ public class AppointmentService implements BaseService <Appointment, String> {
     public Appointment update(Appointment appointment) {
         return appointmentRepository.save(appointment);
     }
-    @Override
-    public void delete(String id) {
-        appointmentRepository.deleteById(UUID.fromString(id));
-    }
 
 
     public boolean isTimeAvailable(Doctor doctor, LocalDate date, LocalTime time, Patient patient) {

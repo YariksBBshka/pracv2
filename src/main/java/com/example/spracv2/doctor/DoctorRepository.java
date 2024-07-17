@@ -1,9 +1,10 @@
 package com.example.spracv2.doctor;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.spracv2.common.RestrictedRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-public interface DoctorRepository extends JpaRepository <Doctor, UUID> {
-    Doctor findByFirstnameAndLastname(String firstname, String lastname);
+@Repository
+public interface DoctorRepository extends RestrictedRepository<Doctor, UUID> {
 }
