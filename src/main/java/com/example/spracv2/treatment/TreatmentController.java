@@ -25,7 +25,7 @@ public class TreatmentController {
     }
 
     @GetMapping("/treatmentHistory")
-    public List<Treatment> getTopBooks() {
+    public List<Treatment> getHistory() {
         return null;
     }
 }

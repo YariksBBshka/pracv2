@@ -63,6 +63,9 @@ public class AppointmentService implements BaseService <Appointment, String> {
             if (appointment.getAppointmentTime().equals(time)) {
                 return false;
             }
+            if(isTimeSlotConflicting(appointment.getAppointmentTime(), time)){
+                return false;
+            }
         }
         if (patient.getClientStatus().equals(PatientStatus.VIP) && time.isBefore(LocalTime.of(19, 0)) &&(time.isAfter(LocalTime.of(10, 0)))) {
             return true;
@@ -71,7 +74,9 @@ public class AppointmentService implements BaseService <Appointment, String> {
         }
         return false;
     }
-
+    private boolean isTimeSlotConflicting(LocalTime timeSlot, LocalTime appointmentTime) {
+        return timeSlot.isBefore(appointmentTime.plusMinutes(10)) && timeSlot.isAfter(appointmentTime.minusMinutes(10));
+    }
 
     public Appointment completeAppointment(Appointment appointment) {
         if (!(appointment.getStatus().equals(AppointmentStatus.CANCELLED))) {
